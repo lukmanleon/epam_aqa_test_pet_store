@@ -1,18 +1,20 @@
-import { PetApi } from "../../support/api/client";
-import { makePet } from "../../support/api/dataFactory";
+import { createNewPet } from "../../support/pet/create-pet";
+import { findPetById } from "../../support/pet/find-pet-by-id";
+import { updatePet } from "../../support/pet/update-pet";
 
-describe("Pet API", () => {
-  it("should create and retrieve a pet", () => {
-    const newPet = makePet();
+// WARNING: Test might be flaky due to usage of demo API
+describe("PET API Test Cases", () => {
 
-    PetApi.addPet(newPet).then(({ status, body }) => {
-      expect(status).to.eq(200);
-      expect(body.name).to.eq(newPet.name);
-    });
-
-    PetApi.getPetById(newPet.id).then(({ status, body }) => {
-      expect(status).to.eq(200);
-      expect(body.id).to.eq(newPet.id);
-    });
+  it("should create a new pet", () => {
+    createNewPet()
   });
+
+  it("should find a pet by ID", () => {
+    findPetById()
+  });
+
+  it("should update existing pet", () => {
+    updatePet()
+  });
+
 });
