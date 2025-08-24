@@ -24,4 +24,6 @@ jobs:
       - name: Run API tests (headless)
         env:
           BASE_URL: https://petstore.swagger.io/v2
+          # API key is set on repository
+          API_KEY: ${{ secrets.API_KEY }}
         run: npm test

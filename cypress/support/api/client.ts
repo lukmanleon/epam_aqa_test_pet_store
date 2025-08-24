@@ -1,4 +1,3 @@
-// cypress/support/api/client.ts
 export type Category = { id?: number; name?: string };
 export type Tag = { id?: number; name?: string };
 export type PetStatus = "available" | "pending" | "sold";
@@ -12,32 +11,51 @@ export interface Pet {
   status?: PetStatus;
 }
 
+/**
+ * Wrapper around cy.request that always attaches api_key
+ */
+function apiRequest<T = any>(options: Partial<Cypress.RequestOptions>) {
+  const requestOptions: Cypress.RequestOptions = {
+    method: options.method || "GET",
+    url: options.url!,
+    body: options.body,
+    headers: {
+      "Content-Type": "application/json",
+      "api_key": Cypress.env("apiKey"),
+      ...(options.headers || {}),
+    },
+    failOnStatusCode: options.failOnStatusCode ?? false,
+  };
+
+  // Debug log for headers
+  cy.log(`**Request Headers:** ${JSON.stringify(requestOptions.headers)}`);
+
+  return cy.request<T>(requestOptions);
+}
+
+
+
 export const PetApi = {
   addPet(pet: Pet) {
-    return cy.request<Pet>({
+    return apiRequest<Pet>({
       method: "POST",
       url: "/pet",
       body: pet,
-      headers: { "Content-Type": "application/json" },
-      failOnStatusCode: false
     });
   },
 
   getPetById(petId: number | string) {
-    return cy.request<Pet>({
+    return apiRequest<Pet>({
       method: "GET",
       url: `/pet/${petId}`,
-      failOnStatusCode: false
     });
   },
-  
+
   updatePet(pet: Pet) {
-    return cy.request<Pet>({
+    return apiRequest<Pet>({
       method: "PUT",
       url: "/pet",
       body: pet,
-      headers: { "Content-Type": "application/json" },
-      failOnStatusCode: false
     });
-  }
+  },
 };
