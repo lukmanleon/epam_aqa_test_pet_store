@@ -4,15 +4,35 @@ Practical API Test Automation for AQA Candidates
 
 ## What this covers
 - POST /pet – create pet
-- GET /pet/{petId} – fetch pet by id
+- GET /pet/{petId} – fetch pet by id (both positive and negative cases)
 - PUT /pet – update pet
-- Schema validation with AJV
-- Negative paths and basic idempotency check
 - CI with GitHub Actions
+- Usage of an API key that is stored securely with the repository
 
 ## Getting Started
+### Prerequisites
+- Node.js v20+
+- npm v9+
+
+### Setup
+1. Clone the repo and install dependencies:
 ```bash
 npm ci
-export BASE_URL="https://petstore.swagger.io/v2" # or your env
-npm run open # interactive
-npm test     # headless
+
+
+2. Create a .env file in the project root:
+```bash
+BASE_URL=https://petstore.swagger.io/v2
+API_KEY=your_api_key_here
+
+
+3. Open the terminal and run the testst either in interactive (GUI) or headless mode
+Interactive GUI:
+```bash
+npm run open
+npx cypress open
+
+Headless mode:
+```bash
+npm test 
+npx cypress run
