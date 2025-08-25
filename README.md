@@ -18,21 +18,23 @@ Practical API Test Automation for AQA Candidates
 1. Clone the repo and install dependencies:
 ```bash
 npm ci
-
+```
 
 2. Create a .env file in the project root:
-```bash
 BASE_URL=https://petstore.swagger.io/v2
 API_KEY=your_api_key_here
 
 
-3. Open the terminal and run the testst either in interactive (GUI) or headless mode
-Interactive GUI:
+3. Open the terminal and run the tests.
+
+Interactive (GUI) mode:
 ```bash
 npm run open
 npx cypress open
+```
 
 Headless mode:
 ```bash
 npm test 
 npx cypress run
+```
